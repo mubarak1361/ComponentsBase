@@ -1,10 +1,8 @@
 package com.rnd.componentbase;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.view.MenuItem;
 
 import com.rnd.components.DrawerActivity;
@@ -38,5 +36,9 @@ public class MainActivity extends DrawerActivity {
     @Override
     protected int inflateNavigationViewMenu() {
         return R.menu.drawer_item;
+    }
+
+    void getStrings(@StringRes int resId){
+        setTitle(getString(resId));
     }
 }

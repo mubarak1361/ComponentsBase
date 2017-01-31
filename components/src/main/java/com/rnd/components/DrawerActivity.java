@@ -1,6 +1,8 @@
 package com.rnd.components;
 
 import android.content.res.Configuration;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.MenuRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
@@ -15,11 +17,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public abstract class DrawerActivity extends AppCompatActivity implements OnNavigationItemSelectedListener,OnGetComponents {
+public abstract class DrawerActivity extends AppCompatActivity implements OnNavigationItemSelectedListener, OnGetComponents {
+
+    @LayoutRes
+    protected abstract int inflateNavigationViewHeader();
+
+    @MenuRes
+    protected abstract int inflateNavigationViewMenu();
 
     protected abstract boolean onNavigationViewItemSelected(@NonNull MenuItem item);
-    protected abstract int inflateNavigationViewHeader();
-    protected abstract int inflateNavigationViewMenu();
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -41,10 +47,10 @@ public abstract class DrawerActivity extends AppCompatActivity implements OnNavi
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nvView);
 
-        if(openDrawerConentDescRes!= 0 && closeDrawerContentDescRes!=0){
-            drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, openDrawerConentDescRes,  closeDrawerContentDescRes);
-        }else{
-            drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name,  R.string.app_name);
+        if (openDrawerConentDescRes != 0 && closeDrawerContentDescRes != 0) {
+            drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, openDrawerConentDescRes, closeDrawerContentDescRes);
+        } else {
+            drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         }
 
         drawerLayout.addDrawerListener(drawerToggle);
@@ -74,7 +80,7 @@ public abstract class DrawerActivity extends AppCompatActivity implements OnNavi
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 
-    public void setOpenCloseDrawerContentDescRes(@StringRes int openDrawerConentDescRes, @StringRes int closeDrawerContentDescRes){
+    public void setOpenCloseDrawerContentDescRes(@StringRes int openDrawerConentDescRes, @StringRes int closeDrawerContentDescRes) {
         this.openDrawerConentDescRes = openDrawerConentDescRes;
         this.closeDrawerContentDescRes = closeDrawerContentDescRes;
     }
